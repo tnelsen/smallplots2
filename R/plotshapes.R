@@ -266,7 +266,7 @@ plotshapes <- function(datapath, base_image, shp_name){
 			}
 		}
 
-		#spatial.polys.checkb <- function(my_spatial_polys){
+		spatial.polys.checkb <- function(my_spatial_polys){
 			raster::plot(cropb)
 			raster::plot(my_spatial_polys, add = T)
 			base::invisible(base::writeLines(base::strwrap("Are you satisfied with the polygons in the top of the field?")))
