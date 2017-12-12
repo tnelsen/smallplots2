@@ -1,14 +1,28 @@
 Package: smallplots2
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Small Plots Research Package
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Authors@R: person("Taylor", "Nelsen", email = "tsnelsen@ucdavis.edu", role = c("aut", "cre"))
+Maintainer: The package maintainer <t.s.nelsen@gmail.com>
+Description: smallplots2 is a package for small plot research especially in 
+    agricultural variety trials. The package works with UAS image data, weather 
+    data and plot observation data from excel. This package was originally made 
+    for the Grains Cropping Systems Lab at UC Davis. 
+Depends: R (>= 3.4.1)
+Imports:
+    rgdal (>= 1.2.8),
+    sp (>= 1.2.5), 
+    raster (>= 2.5.8),
+    readxl (>= 1.0.0),
+    geosphere (>= 1.5.5),
+    RCurl (>= 1.95.4.8),
+    jsonlite (>= 1.5), 
+    readtext (>= 0.50)
+License: MIT + fiel LICENSE
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 6.0.1.9000
 Suggests: knitr,
-    rmarkdown
+    rmarkdown, 
+    testthat
 VignetteBuilder: knitr
