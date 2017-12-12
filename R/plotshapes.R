@@ -355,7 +355,7 @@ plotshapes <- function(datapath, base_image, shp_name){
 				return(sp_output)
 			}
 		}
-		sp_output <- second_field()
+		#sp_output <- second_field()
 		return(sp_output)
 		}
 
