@@ -12,15 +12,12 @@
 plotshapes <- function(datapath, base_image, shp_name){
 
 	# Load in .tif file to use for shapefile creation - red band clearest
-	base::invisible(base::writeLines(base::strwrap("> This program goes through
-																								 step by step to create a shapefile in order to extract data from UAS imagry.
-																								 Make sure your file structure is set up as detailed in the README.md file
-																								 before you start.")))
+	base::invisible(base::writeLines(base::strwrap("> This program goes automatically generates a shapefile in order to extract data from a TIFF image.")))
 
 	# User selection of location - if more than 1 location
 	base::invisible(base::writeLines(base::strwrap("> There are many user
 																								 selections throughout this program. When prompted press the number of your
-																								 selection, then enter. '...' in the console is also a prompt to press enter
+																								 selection, then 'Enter.' '...' in the console is also a prompt to press enter
 																								 when ready to continue.")))
 	base::invisible(base::readline(prompt =  "..."))
 
