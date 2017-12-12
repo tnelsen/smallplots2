@@ -59,7 +59,7 @@ plotextract2 <- function(datapath, shapefile, extraction_tiff, filename){
   merge_data <- base::merge(plot.data, extracted.data, by = "id")
 
   # Write data to csv.
-  utils::write.csv(merge_data, file.path(datapath, file_name), row.names = FALSE)
+  utils::write.csv(merge_data, file.path(datapath, filename), row.names = FALSE)
 }
 
 
