@@ -15,18 +15,14 @@ plotshapes <- function(datapath, base_image, shp_name){
 	base::invisible(base::writeLines(base::strwrap("> This program goes automatically generates a shapefile in order to extract data from a TIFF image.")))
 
 	# User selection of location - if more than 1 location
-	base::invisible(base::writeLines(base::strwrap("> There are many user
-																								 selections throughout this program. When prompted press the number of your
-																								 selection, then 'Enter.' '...' in the console is also a prompt to press enter
-																								 when ready to continue.")))
+	base::invisible(base::writeLines(base::strwrap("> There are many user selections throughout this program. When prompted press the number of your selection, then 'Enter.' '...' in the console is also a prompt to press enter when ready to continue.")))
 	base::invisible(base::readline(prompt =  "..."))
 
 
 	# Create raster.
 	rast <- raster::raster(base_image)
 
-	base::invisible(base::writeLines(base::strwrap("The image is projecting.
-																								 This may take some time. Please wait.")))
+	base::invisible(base::writeLines(base::strwrap("The image is projecting. This may take some time. Please wait.")))
 
 	# Project to coordinate system - takes time
 	WGS.r <- raster::projectRaster(rast, crs = "+init=epsg:4326 +proej=longlat
@@ -39,9 +35,7 @@ plotshapes <- function(datapath, base_image, shp_name){
 																	 sheet = "Field_Data")
 	sp_output <- list()
 	single.field <- function(plot_data, field_data, WGS.r, sp_output){
-		base::invisible(base::writeLines(base::strwrap("Now that the image has been
-																									 chosen please answer questions about the field as the program requies
-																									 information about the field dimensions and plot metadata.")))
+		base::invisible(base::writeLines(base::strwrap("Now that the image has been chosen please answer questions about the field as the program requies information about the field dimensions and plot metadata.")))
 
 	plotlength <- base::invisible(base::readline(prompt = "1. Plot length: "))
 	columns <- base::invisible(base::readline(prompt = "2. Columns: "))
@@ -52,29 +46,19 @@ plotshapes <- function(datapath, base_image, shp_name){
 
 	# Digitizing loop ------------------------------------------------------------
 	raster::plot(WGS.r)
-	base::invisible(base::writeLines(base::strwrap("Now you need to digitize the
-																									 center of a few plots. The plots will be centerd and edited in QGIS but being precise now will save time later.
-																									 ")))
+	base::invisible(base::writeLines(base::strwrap("Now you need to digitize the center of a few plots. The plots will be centerd and generated based on your selections.")))
 	base::invisible(base::readline(prompt =  "..."))
-	base::invisible(base::writeLines(strwrap("Step 1: Draw a box around the field
-																						 you are working with in the plot window by clicking the top left corner and
-																						 the bottom right corner. Make the box slightly larger than the field so that
-																						 you can see all the edges. NOTE: This function can only work with plots that
-																						 are adjacent to eachother and uniform in shape and distribution.")))
+	base::invisible(base::writeLines(strwrap("Step 1: Draw a box around the field  you are working with in the plot window by clicking the top left corner and the bottom right corner. Make the box slightly larger than the field so that you can see all the edges. NOTE: This function can only work with plots that are adjacent to eachother and uniform in shape and distribution.")))
 		closecrop <- raster::select(WGS.r)
 		raster::plot(closecrop)
 
-		base::invisible(base::writeLines(base::strwrap("Step 2: Draw another box
-																									 around the bottommost row. This includes any fill.")))
+		base::invisible(base::writeLines(base::strwrap("Step 2: Draw another box around the bottommost row. This includes any fill.")))
 		cropa <- raster::select(closecrop)
 		raster::plot(cropa)
 
 		first.points <- function(cropa, plotlength, columns, rows){
 			# Create points.
-			base::invisible(base::writeLines(base::strwrap("> Step 3: Click the center
-																										 of the plot in the bottom left corner, then the center of the plot in
-																										 the bottom right corner. Do your best to center the point in relation to
-																										 the width and the length of the plot.")))
+			base::invisible(base::writeLines(base::strwrap("> Step 3: Click the center of the plot in the bottom left corner, then the center of the plot in the bottom right corner. Do your best to center the point in relation to the width and the length of the plot.")))
 
 			plot.centers.south <- raster::click(cropa, n = 2, xy = TRUE)
 
@@ -117,15 +101,12 @@ plotshapes <- function(datapath, base_image, shp_name){
 
 			first.points.check <- function(corner.SW, plot.corners, WE.bearing, Mplotwidth,
 																		 Mplotlength, point.matrix){
-				base::invisible(base::writeLines(base::strwrap("> Are you satisfied with
-																											 the location of the points?")))
+				base::invisible(base::writeLines(base::strwrap("> Are you satisfied with the location of the points?")))
 				base::invisible(base::writeLines(c("1: Yes", "2: No")))
 				answer <- base::invisible(base::readline(prompt = "Selection: "))
 
 				if (answer == "2"){
-					base::invisible(base::writeLines(base::strwrap("> You will have to
-																												 choose your points again. Try to adjust them according to the
-																												 inconsistancies in the current image.")))
+					base::invisible(base::writeLines(base::strwrap("> You will have to choose your points again. Try to adjust them according to the inconsistancies in the current image.")))
 					first.points(cropa = cropa, plotlength = plotlength, columns = columns, rows = rows)
 				}
 
@@ -151,15 +132,12 @@ plotshapes <- function(datapath, base_image, shp_name){
 		Mplotlength <-fp_list[[5]]
 		point.matrix <- fp_list[[6]]
 
-		base::invisible(base::writeLines(base::strwrap("> Step 4: Draw another box
-																									 around the row that contains topmost row.")))
+		base::invisible(base::writeLines(base::strwrap("> Step 4: Draw another box around the row that contains topmost row.")))
 		cropb <- raster::select(closecrop)
 		raster::plot(cropb)
 
 		populate.points <- function(){
-			base::invisible(base::writeLines(base::strwrap("> Step 5: Click the center
-																										 of the plot in the top left corner. Do your best to center the point in
-																										 relation to the width and the length of the plot.", width = 80)))
+			base::invisible(base::writeLines(base::strwrap("> Step 5: Click the center of the plot in the top left corner. Do your best to center the point in relation to the width and the length of the plot.", width = 80)))
 
 			plot.center.north <- raster::click(cropb, n = 1, xy = TRUE)
 			corner.NW <- base::as.matrix(plot.center.north[ ,1:2])
@@ -186,15 +164,12 @@ plotshapes <- function(datapath, base_image, shp_name){
 			graphics::points(plot.corners.sp, pch = 19)
 
 			populate.points.check <- function(){
-				base::invisible(base::writeLines(base::strwrap("Are you satisfied with the
-																											 location of the points?")))
+				base::invisible(base::writeLines(base::strwrap("Are you satisfied with the location of the points?")))
 				base::invisible(base::writeLines(c("1: Yes", "2: No")))
 				answer1b <- base::invisible(base::readline(prompt = "Selection: "))
 
 				if (answer1b == "2"){
-					base::invisible(base::writeLines(base::strwrap("You will have to choose
-																												 your points again. Try to adjust them according to the inconsistancies
-																												 in the current image.")))
+					base::invisible(base::writeLines(base::strwrap("You will have to choose your points again. Try to adjust them according to the inconsistancies in the current image.")))
 					plot.corners <- point.matrix
 					plot.corners.df <- base::as.data.frame(point.matrix)
 					plot.corners.sp <- sp::SpatialPoints(point.matrix)
@@ -218,10 +193,7 @@ plotshapes <- function(datapath, base_image, shp_name){
 
 		spatial.polys2 <- function(){
 			# Set the size of the polygons that will form the shape file
-			base::invisible(base::writeLines(base::strwrap("Now you will need to set the
-																										 size of the size of the area that is used to extract the reflectance values.
-																										 Enter in the number of feet from the center point for both width and length
-																										 when prompted.")))
+			base::invisible(base::writeLines(base::strwrap("Now you will need to set the size of the size of the area that is used to extract the reflectance values. Enter in the number of feet from the center point for both width and length when prompted.")))
 			base::invisible(base::readline(prompt =  "..."))
 			polyWidth <- base::invisible(base::readline(prompt =
 																										"Width of extraction polygon (ft): "))
@@ -283,16 +255,13 @@ plotshapes <- function(datapath, base_image, shp_name){
 			raster::plot(cropa)
 			raster::plot(my_spatial_polys, add = T)
 
-			base::invisible(base::writeLines(base::strwrap("Are you satisfied with the
-																										 polygons in the bottom of the field?")))
+			base::invisible(base::writeLines(base::strwrap("Are you satisfied with the polygons in the bottom of the field?")))
 			base::invisible(base::writeLines(c("1: Yes", "2: No")))
 			answer2 <- base::invisible(base::readline(prompt = "Selection: "))
 
 
 			if (answer2 == "2"){
-				base::invisible(base::writeLines(base::strwrap("You can adjust the size of
-																											 the polygons so that they all fit inside the plots. You will be prompted
-																											 to reset the size of the polygons.")))
+				base::invisible(base::writeLines(base::strwrap("You can adjust the size of the polygons so that they all fit inside the plots. You will be prompted to reset the size of the polygons.")))
 				spatial.polys2()
 			}
 		}
@@ -300,15 +269,12 @@ plotshapes <- function(datapath, base_image, shp_name){
 		spatial.polys.checkb <- function(my_spatial_polys){
 			raster::plot(cropb)
 			raster::plot(my_spatial_polys, add = T)
-			base::invisible(base::writeLines(base::strwrap("Are you satisfied with the
-																										 polygons in the top of the field?")))
+			base::invisible(base::writeLines(base::strwrap("Are you satisfied with the polygons in the top of the field?")))
 			base::invisible(base::writeLines(c("1: Yes", "2: No")))
 			answer3 <- base::invisible(base::readline(prompt = "Selection: "))
 
 			if (answer3 == "2"){
-				base::invisible(base::writeLines(base::strwrap("Adjust the size of
-																											 the polygons so that they all fit inside the plots. You will be prompted
-																											 to reset the size of the polygons.", width = 80)))
+				base::invisible(base::writeLines(base::strwrap("Adjust the size of the polygons so that they all fit inside the plots. You will be prompted to reset the size of the polygons.", width = 80)))
 				spatial.polys2()
 			}
 		}
@@ -404,7 +370,5 @@ plotshapes <- function(datapath, base_image, shp_name){
 	}
 
 	rgdal::writeOGR(obj = merged_sp, dsn = base::file.path(datapath, shp_name), layer = "fieldPlots", driver = "ESRI Shapefile")
-	base::invisible(base::writeLines(base::strwrap("> A shapefile has been
-																								 created for this field. To overwrite it or to srart a new field type
-																								 plotshapes()")))
+	base::invisible(base::writeLines(base::strwrap("> A shapefile has been created for this field. To overwrite it or to srart a new field run plotshapes()")))
 		}
