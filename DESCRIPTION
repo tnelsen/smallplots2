@@ -15,9 +15,7 @@ Imports:
     raster (>= 2.5.8),
     readxl (>= 1.0.0),
     geosphere (>= 1.5.5),
-    RCurl (>= 1.95.4.8),
-    jsonlite (>= 1.5), 
-    readtext (>= 0.50)
+    RCurl (>= 1.95.4.8)
 License: MIT + fiel LICENSE
 Encoding: UTF-8
 LazyData: true
